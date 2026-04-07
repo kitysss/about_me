@@ -154,15 +154,25 @@
     var list = [];
 
     // 模拟生成12个奖品
-    for (var i = 0; i < 12; i++) {
-        list.push({
-            title: '奖品' + (i + 1),
-            color: randomColor()
-        });
-    }
+      var list = [
+    { title: "华莱士", color: "#ff4444" },
+    { title: "猪脚饭", color: "#ff8800" },
+    { title: "谢谢参与", color: "#ffcc00" },
+    { title: "谢谢参与", color: "#44dd44" },
+    { title: "幸运奖6.6", color: "#00ccff" },
+    { title: "特等奖19.9", color: "#9900ff" },
+    { title: "零食大礼包", color: "#ff4444" },
+    { title: "塔斯汀", color: "#ff8800" },
+    { title: "蜜雪冰城", color: "#ffcc00" },
+    { title: "谢谢参与", color: "#44dd44" },
+    { title: "幸运奖8.8", color: "#00ccff" },
+    { title: "特等奖19.9", color: "#9900ff" }
+];
+
+
 
     // 设置奖品列表里必中奖品的下标，如果设置了多个就随机选其中一个，为空就全部随机
-    var winList = [0, 5];   // 奖品1或者奖品6必中
+    var winList = [];   // 奖品1或者奖品6必中
 
     // 主转盘元素
     var main = document.querySelector('.main');
