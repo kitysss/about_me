@@ -1,193 +1,281 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
 <head>
-	<title>KDYs</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="stylesheet" href="css/style.css" />
-	<link rel="stylesheet" href="css/jquery.jscrollpane.css" />
-	<script type="text/javascript" src="js/jquery.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>转盘</title>
 
-	<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
-	<script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
+    <style type="text/css">
+        body {
+     text-align: center;
+    background-image: url(bj2.jpg);
+    background-size: cover;       /* 铺满整个屏幕 */
+    background-position: center;  /* 图片居中 */
+    background-repeat: no-repeat; /* 不重复 */
+    background-attachment: fixed; /* 背景固定不滚动 */
+    margin: 0;
+    padding: 0;
+
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .box {
+            width: 500px;
+            height: 500px;
+            margin: 10px auto;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border: 5px solid black;
+            border-radius: 50%;
+            background: rgba(128, 128, 128, 0.49);
+            overflow: hidden;
+            position: relative;
+            transition: all 3s cubic-bezier(0.46, 0.03, 0.52, 0.96);
+        }
+
+        .pointer {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9;
+        }
+
+        .pointer-bar {
+            width: 60px;
+            height: 25px;
+            background: white;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+
+        .pointer-cursor {
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            left: 85px;
+            top: 50%;
+            transform: translate(-50%, -50%) rotateZ(45deg);
+            background: white;
+        }
+
+        .part {
+            height: 100%;
+            width: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform-origin: left center;
+            z-index: 1;
+        }
+
+        .bg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .title {
+            transform: translate(0, -50%);
+            transform-origin: left top;
+            width: 100%;
+            height: auto;
+            text-align: center;
+            font-size: 30px;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            padding-left: 85px;
+            box-sizing: border-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .winner {
+            font-size: 30px;
+            font-weight: bold;
+            height: 50px;
+        }
+
+        .history-list {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .history-item {
+            font-size: 14px;
+            margin: 10px;
+            padding: 5px;
+            color: white;
+        }
+    </style>
 </head>
+
 <body>
+<div class="box">
+    <div class="main" ontransitionend="end()">
+        <div id="temp" class="part" style="display: none;">
+            <div class="bg"></div>
+            <div class="title"></div>
+        </div>
+    </div>
 
-	<div class="wrapper">
-	
-		<div class="header">
-			<h1><a href="http://www.creturn.com" title="进入我的世界">About KDY</a></h1>
-			<h2>Patience is the key in the faster life</h2>
-		</div>
-		
-		<div class="container">
-			<!-- 简介 -->
-			<div id="profile" class="children">
-				<div class="title">
-					<img src="images/profile.png" alt="Introduce"/>
-				</div>
-				<div class="content">
-					<div class="about-me">
-						<h2>About Me | 关于我</h2>
-						<p>喜欢运动，爱好和平，意愿是中产阶级不再流泪！</p>
-					</div>
-					<div class="personal-info">
-						<h2>Personal info | 个人资料</h2>
-						<ul>
-							
-							<li>
-								<label>Name</label>
-								<span>孔</span>
-							</li>
-							<li>
-								<label>Second Name</label>
-								<span>德宇</span>
-							</li>
-							<li>
-								<label>Address</label>
-								<span>河南省开封市兰考县</span>
-							</li>
-							<li>
-								<label>Email</label>
-								<span>kongdd047@gmail.com</span>
-							</li>
-							<li>
-								<label>Website</label>
-								<span><a href="http://owkdy.000.pe/" target="_blank">www.owkdy.000.pe</a></span>
-							</li>
-							
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div id="skills" class="children">
-				<div class="title">
-					<img src="images/skills.png" alt="skills"/>					
-				</div>
-				<div class="content">
-					<div class="skill">
-						<ul>
-							<li id="skill-html"><span>a little HTML</span></li>
-							<li id="skill-css"><span>a little CSS2</span></li>
-							<li id="skill-jquery"><span>switch skill</span></li>
-							<li id="skill-ajax"><span>basketball</span></li>
-		
-							<li id="skill-php"><span>PHP</span></li>
-							<li id="skill-sql"><span>SQL</span></li>
-							<li id="skill-seo"><span>python</span></li>
-							<li id="skill-seo"><span>java</span></li>
-							<li>计算机网络技术</li>
-						</ul>
-						
-					</div>
-					<div class="skill">
-						<ul>
-							<li id="skill-c"><span>skateballed</span></li>
-							<li id="skill-ps"><span>Photoshop</span></li>
-						</ul>
-						<span class="skill-title">其他</span>
-					</div>
-				</div>
-			</div>
-			<div id="experience" class="children">
-				<div class="title">
-					<img src="images/experience.png" alt="expect"/>					
-				</div>
-				<div class="content">
-					<div class="experience">
-						<h2>故事新篇</h2>
-						<p>2024年8月26日我们相遇</p>
-					</div>
-					<div class="expect">
-						<h2>故事结局</h2>
-						<p>没有结局，我们的故事还在继续，只是开启了下一篇章节</p>
-						
-					</div>
-				</div>
-			</div>
-			<!--<div id="works" class="children">
-				<div class="title">
-					<img src="images/works.png" alt="works"/>					
-				</div>
-				<div class="content">
-					<div class="works-list">
-						<div id="work-ltts" class="work">
-							<div class="work-info">
-								<h3><a href="http://ltts.me/" target="_blank">XX下面项目</a></h3>
-								<p> ....</p>						
-							</div>
-							 <!--这里可以放图片-->
-						</div>
-						<!--<div id="work-ltts-mobile" class="work">
-							<div class="work-info">
-								<h3> xx项目</h3>
-								<p>.....</p>
-							</div>
-							
-						</div>-->
-						<!--<div id="work-doit" class="work">
-							<div class="work-info">
-								<h3>xx项目</h3>
-								<p>......</p>						
-							</div>
-							 
-						</div>-->
-						<!--<div id="work-huoli" class="work">
-							<div class="work-info">
-								<h3>xx项目</h3>
-								<p>.....</p>						
-							</div>
-							 
-						</div>-->
-						 
-					</div>
-				</div>-->
+    <div class="pointer">
+        <div class="pointer-bar"></div>
+        <div class="pointer-cursor"></div>
+    </div>
+</div>
 
-			<!--<div id="contact" class="children">
-				<div class="title">
-					<img src="images/contact.png" alt="contact"/>					
-				</div>
-				<div class="content">
-					<div class="contact-me">
-						<h2>Contact Me | 联系我</h2>
-						<span>Email: master@qq.com</span>
-						<span>Blog: <a href="http://www.creturn.com/">www.creturn.com</a></span>
-					</div>
-					<div class="my-sns">
-						<h2>安区社区</h2>
-						<div><a href="http://wooyun.org/whitehats/creturn">乌云白帽子</a></div>
-						<h2>SNS | 社交网络</h2>
-						<div class="sns-item">
-							<img src="images/blog.png" alt="blog" />
-							<span class="sns-title">Blog</span>
-							<span class="sns-link"><a href="http://www.creturn.com/" target="_blank">http://www.creturn.com/</a></span>
-						</div>
-						<div class="sns-item">
-							<img src="images/sina.png" alt="新浪微博" />
-							<span class="sns-title">Sina Microblog</span>
-							<span class="sns-link"><a href="http://weibo.com/creturn" target="_blank">http://weibo.com/creturn</a></span>
-						</div>
-						<div class="sns-item">
-							<img src="images/tencent.png" alt="乌云白帽子" />
-							<span class="sns-title">Tencent Microblog</span>
-							<span class="sns-link"><a href="http://wooyun.org/whitehats/creturn">乌云白帽子Creturn</a></span>
-						</div>
-						<div class="sns-item">
-							<img src="images/twitter.png" alt="twitter" />
-							<span class="sns-title">QQ</span>
-							<span class="sns-link">312434126</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>-->
-		
-		<div class="footer">
-			<h2>borrowed from the author creturn with git</h2>
-		</div>
-		
-	</div>
+<button onclick="start()">开始</button>
+<div class="winner"></div>
+<div class="history-list"></div>
 
-</body> 
-</html> 
+<script type="text/javascript">
+    // 奖品列表
+    var list = [];
+
+    // 模拟生成12个奖品
+    for (var i = 0; i < 12; i++) {
+        list.push({
+            title: '奖品' + (i + 1),
+            color: randomColor()
+        });
+    }
+
+    // 设置奖品列表里必中奖品的下标，如果设置了多个就随机选其中一个，为空就全部随机
+    var winList = [0, 5];   // 奖品1或者奖品6必中
+
+    // 主转盘元素
+    var main = document.querySelector('.main');
+
+    // 奖品项元素模板
+    var temp = document.querySelector('#temp');
+
+    // 生成随机数
+    function random(num) {
+        return Math.floor(Math.random() * num);
+    }
+
+    // 生成随机颜色
+    function randomColor() {
+        return 'rgb(' + random(250) + ', ' + random(250) + ', ' + random(250) + ')';
+    }
+
+    // 每一项奖品所占的角度
+    var perAngle = 360 / list.length;
+
+    // 遍历奖品列表生成转盘
+    for (var j in list) {
+        var item = list[j];
+
+        // 复制模板副本，生成新的奖品项元素
+        var newNode = temp.cloneNode(true);
+        newNode.style.display = 'block';
+
+        // 设置角度
+        newNode.style.transform = 'rotateZ(' + (perAngle * j + perAngle / 2) + 'deg)';
+
+        // 设置颜色
+        newNode.querySelector('.bg').style.background = item.color;
+
+        // 设置扇形
+        if (list.length > 2) {
+            var p = perAngle / 2; // 每份的角度两等分
+            var d = Math.tan(p * Math.PI / 180) * 100; // 对边的长度
+            var x = (100 - d) / 2; // 每份对边实际百分比
+            newNode.style.clipPath = `polygon(0% 50%, 100% ${x}%, 100% ${100 - x}%)`;
+        }
+
+        newNode.querySelector('.title').innerHTML = item.title;
+
+        main.appendChild(newNode);
+    }
+
+    // 运行标识
+    var isRunning = false;
+
+    // 累计旋转角度
+    var rotate = 0;
+
+    // 开始方法
+    function start() {
+        // 如果运行中，阻止执行
+        if (isRunning) {
+            console.warn('isRunning');
+            return;
+        }
+
+        isRunning = true;
+
+        document.querySelector('.winner').innerHTML = '';
+
+        var r;  // 当次旋转角度
+
+        if (winList.length > 0) {   // 如果设置了必中奖品
+            var win = winList[0];
+            if (winList.length > 1) {
+                // 在设置列表里随机一个
+                win = winList[random(winList.length)];
+            }
+            console.log(win);
+            // 找到该必中下标对应的旋转角度
+            r = (win * perAngle + 360 - (rotate % 360)) % 360 + random(perAngle);
+
+        } else {   // 随机生成
+            // 随机生成旋转角度
+            r = random(360);
+        }
+
+        console.log(r);
+
+        // 多转3圈
+        rotate += r + 360 * 3;
+
+        main.style.transform = 'rotateZ(-' + rotate + 'deg)';
+    }
+
+    // 结束方法，旋转动画结束，transitionend事件触发
+    function end() {
+        isRunning = false;
+
+        console.log(rotate);
+
+        // 根据旋转角度找到目标奖品
+        var index = Math.floor(rotate / perAngle) % list.length;
+
+        var color = list[index].color;
+
+        var winner = list[index];
+        var $el = document.querySelector('.winner');
+        $el.innerHTML = '结果：' + winner.title;
+        $el.style.color = color;
+
+        var h = document.createElement('div');
+        h.className = 'history-item';
+        h.innerHTML = winner.title;
+        h.style.background = color;
+        document.querySelector('.history-list').prepend(h);
+    }
+</script>
+</body>
+</html>
+
